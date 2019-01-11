@@ -1,10 +1,12 @@
 'use strict'
 
 require('dotenv').config()
+const knex = require('knex')
 
-module.exports = {
-    connection: () => {
-        const connection = require('knex')({
+const connection = () => {
+    // const connection = require('knex')({
+    try {
+        const connection = knex({
             client: 'mysql',
             version: '5.7',
             connection: {
@@ -16,5 +18,11 @@ module.exports = {
             }
         })
         return connection
+    } catch (e) {
+        console.log(e)
     }
+}
+
+module.exports = {
+    connection
 }

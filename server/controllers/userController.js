@@ -21,26 +21,18 @@ exports.register = async (req, res, next) => {
         }
 
         const data = await userModel.create(user)
-
-        // Retorna undefined
-        console.log(data)
-
-        if (data) {
-            const { establishment_id, profile } = data[0]
-
-            // return res.send(201, {
+        
+        if (!data.hasOwnProperty('error')) {
             return res.status(201).send({
-                token: await authService.generateToken({ id, profile }),
+                // token: await authService.generateToken({ id, profile }),
                 id: id,
-                establishment_id: establishment_id,
-                profile: profile
+                user: `User ${user.name} created`
             })
+        } else {
+            return res.status(406).send(data)
         }
     } catch(error) {
         console.error(error)
-
-        // express deprecated
-        // return res.send(400, { message: error.message })
         res.status(400).send({ message: error.message })
     }
 }

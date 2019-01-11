@@ -5,8 +5,9 @@ const bcrypt = require('bcrypt')
 
 exports.login = async (user) => {
     const connection = db.connection()
-    const result = await connection.select('id', 'establishment_id', 'nickname', 'profile', 'phone', 'password')
-    .from('user').where('phone', user.phone)
+    const result = await connection.select('id', 'name', 'nickname', 'profile', 'password')
+            .from('user')
+            .where('name', user.name)
 
     if (result.length === 0) throw new Error('Telefone não encontrado')
 

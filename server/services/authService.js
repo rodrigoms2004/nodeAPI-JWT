@@ -1,9 +1,11 @@
 'use strict'
 
 const jwt = require('jsonwebtoken')
+const expirationTime = process.env.EXPIRATION_TIME
 
 exports.generateToken = async (data) => {
-    return jwt.sign(data, process.env.SALT_KEY, { expiresIn: '1d' })
+    // return jwt.sign(data, process.env.SALT_KEY, { expiresIn: '1d' })
+    return jwt.sign(data, process.env.SALT_KEY, { expiresIn: expirationTime })
 }
 
 exports.decodeToken = async (token) => {
