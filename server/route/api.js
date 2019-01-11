@@ -8,10 +8,19 @@ const router = require('express').Router()
 
 const authController = require('../controllers/authController')
 const userController = require('../controllers/userController')
+const todoController = require('../controllers/todoController')
 
 router.post('/register', userController.register)
 router.post('/login', authController.login)
 
+const {authenticate} = require('./../services/authenticate');
+
+// API RESTFUL FOR TODOLIST
+router.post('/todos', authenticate, todoController.create);
+// router.get('/todos', authenticate, todoController.list);
+// router.get('/todos/:id', authenticate, todoController.byId);
+// router.delete('/todos/:id', authenticate, todoController.delete);
+// router.put('/todos/:id', authenticate, todoController.update);
 
 
 
