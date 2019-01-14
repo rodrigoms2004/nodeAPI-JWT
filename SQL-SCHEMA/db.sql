@@ -37,6 +37,23 @@ select id, description, done,
         from_unixtime(finish) as finish
         from toDoList;	
 
+update lokasigfox.toDoList
+set finish = unix_timestamp(now())
+where id = 1;
+
+update `toDoList` set `done` = true, `finish` = '1547485703' where `id` = '5';
+update `toDoList` set `done` = false, `finish` = null where `id` = '5';
+
+update lokasigfox.toDoList
+set done = true
+where id = 1;
+
+update lokasigfox.toDoList
+set done = true,
+finish = 1547485703
+where id = 4;
+
+
 
 
 INSERT INTO lokasigfox.toDoList
@@ -44,7 +61,7 @@ INSERT INTO lokasigfox.toDoList
 	('run script', false, 1547232447);
 
 #'1547232447'
-select from_unixtime(1547232821);
+select from_unixtime(1547485703);
 
 select unix_timestamp(now());
 select now();

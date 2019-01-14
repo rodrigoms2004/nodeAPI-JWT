@@ -1,4 +1,5 @@
 const todoModel = require('../models/todoModel')
+const _ = require('lodash');
 
 const todoController = {
 
@@ -26,16 +27,50 @@ const todoController = {
         }
     },
     list: async(req, res) => {
-
+        try {
+            const data = await todoModel.list()
+            return res.status(200).send({data})
+        } catch(error) {
+            console.error(error)
+            res.status(400).send({ message: error.message })
+        }
     },
     byId: async(req, res) => {
-
+        try {
+            const id = req.params.id
+            const data = await todoModel.byId(id)
+            return res.status(200).send({data})
+        } catch(error) {
+            console.error(error)
+            res.status(400).send({ message: error.message })
+        }
     },
     delete: async(req, res) => {
-
+        try {
+            const id = req.params.id
+            const data = await todoModel.delete(id)
+            return res.status(200).send({
+                id,
+                deleted: (data == 1) ? true : false
+            })
+        } catch(error) {
+            console.error(error)
+            res.status(400).send({ message: error.message })
+        }
     },
     update: async(req, res) => {
-
+        try {
+            const id = req.params.id
+            const body = _.pick(req.body, ['finish']);
+            const data = await todoModel.update(id, body)
+            return res.status(200).send({
+                id,
+                updated: (data == 1) ? true : false
+            })
+        } catch(error) {
+            console.error(error)
+            res.status(400).send({ message: error.message })
+        }
     }
 }   // end todoController
 
